@@ -1,6 +1,6 @@
 <template lang='pug'>
   div.contain.my2
-    h3 Start a new gekko
+    h3 Start a new worker
     gekko-config-builder(v-on:config='updateConfig')
     .hr
     .txt--center(v-if='config.valid')
@@ -112,7 +112,7 @@ export default {
 
         this.startGekko((err, resp) => {
           this.$router.push({
-            path: `/live-gekkos/${resp.id}`
+            path: `/workers/${resp.id}`
           });
         });
       }
@@ -150,12 +150,12 @@ export default {
         if(this.existingMarketWatcher) {
           alert('This market is already being watched, redirecting you now...');
           this.$router.push({
-            path: `/live-gekkos/${this.existingMarketWatcher.id}`
+            path: `/workers/${this.existingMarketWatcher.id}`
           });
         } else {
           this.startWatcher((error, resp) => {
             this.$router.push({
-              path: `/live-gekkos/${resp.id}`
+              path: `/workers/${resp.id}`
             });
           });
         }
@@ -166,7 +166,7 @@ export default {
           // the specified market is already being watched,
           // just start a gekko!
           this.startGekko(this.routeToGekko);
-          
+
         } else {
           // the specified market is not yet being watched,
           // we need to create a watcher
@@ -183,7 +183,7 @@ export default {
         return console.error(err, resp.error);
 
       this.$router.push({
-        path: `/live-gekkos/${resp.id}`
+        path: `/workers/${resp.id}`
       });
     },
     startWatcher: function(next) {

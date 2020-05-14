@@ -7,7 +7,6 @@ Vue.use(VueRouter);
 import store from './store'
 
 import backtester from './components/backtester/backtester.vue'
-import home from './components/layout/home.vue'
 
 import data from './components/data/data.vue'
 import importer from './components/data/import/importer.vue'
@@ -23,16 +22,15 @@ const router = new VueRouter({
   mode: 'hash',
   base: __dirname,
   routes: [
-    { path: '/', redirect: '/home' },
-    { path: '/home', component: home },
+    { path: '/', redirect: '/workers' },
     { path: '/backtest', component: backtester },
     { path: '/config', component: config },
     { path: '/data', component: data },
     { path: '/data/importer', component: importer },
     { path: '/data/importer/import/:id', component: singleImport },
-    { path: '/live-gekkos', component: gekkoList },
-    { path: '/live-gekkos/new', component: newGekko },
-    { path: '/live-gekkos/:id', component: singleGekko },
+    { path: '/workers', component: gekkoList },
+    { path: '/workers/new', component: newGekko },
+    { path: '/workers/:id', component: singleGekko },
   ]
 });
 

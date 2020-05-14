@@ -3,11 +3,10 @@
     #top
     header.bg--off-white.grd
       .contain.grd-row
-        h3.py1.px2.col-2 Gekko UI
+        h3.py1.px2.col-2 21Trader
     nav.bg--light-gray
       .menu.contain
-        router-link(to='/home').py1 Home
-        router-link(to='/live-gekkos').py1 Live Gekkos
+        router-link(to='/workers').py1 Workers
         router-link(to='/backtest').py1 Backtest
         router-link(to='/data').py1 Local data
         router-link(to='/config').py1 Config
