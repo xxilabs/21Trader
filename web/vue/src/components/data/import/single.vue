@@ -1,7 +1,7 @@
 <template lang='pug'>
-  div.contain.my2
+  div.contain
     div(v-if='data && !data.done')
-      h2 Importing data..
+      h3.page-header.py2 Importing data
       .grd
         .grd-row
           .grd-row-col-2-6 <strong>Market:</strong>
@@ -26,20 +26,18 @@
       spinner(v-if='!initialized')
       .contain(v-if='initialized')
         progressBar(:progress='progress')
-      p 
-        em (you don't have to wait until the import is done,
-          | you can already start 
-          router-link(to='/backtest') backtesting
-          | ).
+      p
+        em you don't have to wait until the import is done to start
+           router-link(to='/backtest')  backtesting
     div(v-if='data && data.done').txt--center
       h2 Import done
-      p 
-        | Go and 
+      p
+        | Go and
         router-link(to='/backtest') backtest
         |  with your new data!
     div(v-if='!data').txt--center
       h2 ERROR: Unknown import
-      p 
+      p
         I don't know this import..
 </template>
 

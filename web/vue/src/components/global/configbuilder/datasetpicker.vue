@@ -1,51 +1,57 @@
-<template lang='pug'>
-div
-  h3 Select a dataset
-  .txt--center.my2(v-if='datasetScanstate === "idle"')
-    a.w100--s.btn--primary.scan-btn(href='#', v-on:click.prevent='scan') Scan available data
-  .txt--center.my2(v-if='datasetScanstate === "scanning"')
-    spinner
-  .my2(v-if='datasetScanstate === "scanned"')
-
-    div(v-if='datasets.length != 0')
-      table.full
-        thead
-          tr
-            th 
-            th exchange
-            th currency
-            th asset
-            th from
-            th to
-            th duration
-        tbody
-          tr(v-for='(set, i) in datasets')
-            td.radio
-              input(type='radio', name='dataset', :value='i', v-model='setIndex', v-bind:id='set.id')
-            td 
-              label(v-bind:for='set.id') {{ set.exchange }}
-            td 
-              label(v-bind:for='set.id') {{ set.currency }}
-            td
-              label(v-bind:for='set.id') {{ set.asset }}
-            td 
-              label(v-bind:for='set.id') {{ fmt(set.from) }}
-            td 
-              label(v-bind:for='set.id') {{ fmt(set.to) }}
-            td
-              label(v-bind:for='set.id') {{ humanizeDuration(set.to.diff(set.from)) }}
-      a.btn--primary(href='#', v-on:click.prevent='openRange', v-if='!rangeVisible') Adjust range
-      template(v-if='rangeVisible')
-        div
-          label(for='customFrom') From:
-          input(v-model='customFrom')
-        div
-          label(for='customTo') To:
-          input(v-model='customTo')
-
-    em(v-else) No Data found 
-      a(href='#/data/importer') Lets add some
-
+<template>
+  <div>
+    <h4 class="section-header">Select a dataset</h4>
+    <div class="dataset-picker-area section-area">
+      <div class="txt--center" v-if="datasetScanstate === 'idle'">
+        <a class="w100--s btn--primary scan-btn" href="#" v-on:click.prevent="scan">Scan available data</a>
+      </div>
+      <div class="txt--center" v-if="datasetScanstate === 'scanning'">
+        <spinner></spinner>
+      </div>
+      <div v-if="datasetScanstate === 'scanned'">
+        <div v-if="datasets.length != 0">
+          <table class="full">
+            <thead>
+              <tr>
+                <th> </th>
+                <th>exchange</th>
+                <th>currency</th>
+                <th>asset</th>
+                <th>from</th>
+                <th>to</th>
+                <th>duration</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(set, i) in datasets">
+                <td class="radio"><input type="radio" name="dataset" :value="i" v-model="setIndex" v-bind:id="set.id" /></td>
+                <td><label v-bind:for="set.id">{{ set.exchange }}</label></td>
+                <td><label v-bind:for="set.id">{{ set.currency }}</label></td>
+                <td><label v-bind:for="set.id">{{ set.asset }}</label></td>
+                <td><label v-bind:for="set.id">{{ fmt(set.from) }}</label></td>
+                <td><label v-bind:for="set.id">{{ fmt(set.to) }}</label></td>
+                <td><label v-bind:for="set.id">{{ humanizeDuration(set.to.diff(set.from)) }}</label></td>
+              </tr>
+            </tbody>
+          </table>
+          <a class="btn--primary" href="#" v-on:click.prevent="openRange" v-if="!rangeVisible">Adjust range</a>
+          <template v-if="rangeVisible">
+            <div>
+              <label for="customFrom">From:</label>
+              <input v-model="customFrom"/>
+            </div>
+            <div>
+              <label for="customTo">To:</label>
+              <input v-model="customTo"/>
+            </div>
+          </template>
+        </div>
+        <em v-else>
+          No Data found <a href="#/data/importer">Lets add some</a>
+        </em>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -127,5 +133,16 @@ td.radio {
 td label{
   display: inline;
   font-size: 1em;
+}
+
+.dataset-picker-area {
+  padding: 20px;
+}
+.dataset-picker-area .btn--primary {
+  margin: 20px 0 0 0;
+}
+
+.scan-btn {
+  margin: 100px 0!important;
 }
 </style>

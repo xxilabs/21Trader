@@ -1,6 +1,6 @@
 <template lang='pug'>
 div
-  h3 Daterange
+  h4 Daterange
   div
     label(for='from') From
     input(v-model='from')

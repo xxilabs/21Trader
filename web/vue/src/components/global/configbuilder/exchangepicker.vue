@@ -1,10 +1,9 @@
 <template lang='pug'>
 div
-  .mx1
-    label(for='exchange').wrapper Exchange:
-    .custom-select.button
-      select(v-model='exchange')
-        option(v-for='(market, e) in exchanges') {{ e }}
+  label(for='exchange').wrapper Exchange:
+  .custom-select.button
+    select(v-model='exchange')
+      option(v-for='(market, e) in exchanges') {{ e }}
 </template>
 
 <script>

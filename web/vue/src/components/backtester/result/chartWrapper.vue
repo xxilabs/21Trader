@@ -1,7 +1,8 @@
-<template lang='pug'>
-#chartWrapper(v-bind:class='{ clickable: !isClicked }')
-  .shield(v-on:click.prevent='click')
-  svg#chart(width='960', :height='height')
+<template>
+  <div id="chartWrapper" class="contain" v-bind:class="{ clickable: !isClicked }">
+    <div class="shield" v-on:click.prevent="click"></div>
+    <svg id="chart section-area" width="960" :height="height"></svg>
+  </div>
 </template>
 
 <script>
@@ -36,7 +37,6 @@ export default {
     render: function() {
       this.remove();
 
-
       if(_.size(this.data.candles) < MIN_CANDLES) {
         drawMessage('Not enough data to spawn chart');
       } else {
@@ -63,12 +63,11 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background: grey;
+  /* background: grey; */
   opacity: 0.1;
 }
 
 #chart {
-  background-color: #eee;
   width: 100%;
 }
 
@@ -83,15 +82,15 @@ export default {
 }
 
 #chart .line {
-  fill: none;
-  stroke: steelblue;
+  fill: rgba(255, 255, 255, 0.1);
+  stroke: white;
   stroke-width: 1.5px;
   clip-path: url(#clip);
 }
 
-/*#chart .price.line {
-  stroke-width: 2.5px;
-}*/
+#chart .price.line {
+  /* stroke-width: 2.5px; */
+}
 
 #chart circle.buy {
   fill: #7FFF00;
@@ -101,4 +100,24 @@ export default {
   fill: red;
 }
 
+#chart .axis {
+  stroke: white;
+  /* fill: white; */
+}
+#chart .axisLine {
+  stroke: white;
+}
+#chart .tick {
+  font-weight: 100;
+  letter-spacing: 1px;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  fill: white;
+  stroke: white;
+}
+
+#chart .message {
+  fill: rgba(255, 255, 255, 0.5);
+  text-anchor: middle;
+}
 </style>

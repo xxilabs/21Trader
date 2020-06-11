@@ -42,14 +42,14 @@ export default {
   height: 20px;
   border-radius: 10px;
   /* Progress bar animation */
-  background-color: #FFA500;
+  background-color: rgba(186, 84, 245, 1);
   animation-duration: 1500ms;
   animation-fill-mode: forwards;
   animation-iteration-count: infinite;
   animation-name: shimmer;
   animation-timing-function: linear;
   background: #f6f7f8;
-  background: linear-gradient(to right, #FFA500 10%, #ffce77 25%, #FFA500 40%);
+  background: linear-gradient(to right, rgba(186, 84, 245, 1) 10%, rgba(225, 78, 203, 0.3) 25%, rgba(186, 84, 245, 1) 40%);
   background-size: 960px 50px;
   background-position: left;
   position: relative;

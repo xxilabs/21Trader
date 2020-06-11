@@ -1,12 +1,11 @@
 <template lang='pug'>
 .grd
-  .px1
-    h3 Paper trader
-    a.btn--primary(href='#', v-on:click.prevent='switchToggle', v-if='toggle === "closed"') Change paper trader settings
-    template(v-if='toggle === "open"')
-      p Settings:
-      textarea.params(v-model='rawPaperTraderParams')
-      p.bg--red.p1(v-if='rawPaperTraderParamsError') {{ rawPaperTraderParamsError.message }}
+  h4.section-header Paper trader
+  a.my2.btn--primary(href='#', v-on:click.prevent='switchToggle', v-if='toggle === "closed"') Change paper trader settings
+  template(v-if='toggle === "open"')
+    p Paper Trader Settings:
+    textarea.params(v-model='rawPaperTraderParams')
+    p.bg--red.p1(v-if='rawPaperTraderParamsError') {{ rawPaperTraderParamsError.message }}
 </template>
 
 <script>
@@ -25,7 +24,7 @@ export default {
       rawPaperTraderParams: '',
       rawPaperTraderParamsError: false,
       paperTraderParams: {},
-      toggle: 'closed'
+      toggle: 'open'
     };
   },
   watch: {

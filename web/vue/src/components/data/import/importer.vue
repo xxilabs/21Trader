@@ -1,19 +1,20 @@
 <template lang='pug'>
-  div.contain.my2
-    div.text(v-html='intro')
-    .hr
-    h3 Currently running imports
+  div.contain
+    div
+      h3.py2.page-header Import data
+      The importer can download historical market data directly from the exchange.
+    br
+    h4.section-header Currently running imports
     p(v-if='imports.length === 0') You currently don't have any imports running.
     ul(v-if='imports.length')
       li(v-for='_import in imports')
         router-link(:to='"/data/importer/import/" + _import.id') {{ _import.watch.exchange }}:{{ _import.watch.currency }}/{{ _import.watch.asset }}
-
-    .hr
-    h3 Start a new import
+    br
+    h4.section-header Start a new import
     import-config-builder(v-on:config='updateConfig')
-    .hr
+    br
     .txt--center
-      a.w100--s.my1.btn--primary(href='#', v-on:click.prevent='run') Import
+      a.w100--s.my2.btn--primary(href='#', v-on:click.prevent='run') Import Data
 </template>
 
 <script>

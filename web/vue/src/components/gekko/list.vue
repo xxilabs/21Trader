@@ -1,64 +1,74 @@
-<template lang='pug'>
-  .contain.py2
-    h3 Market watchers
-    .text(v-if='!watchers.length')
-      p You don't have any market watchers.
-    table.full.clickable(v-if='watchers.length')
-      thead
-        tr
-          th exchange
-          th currency
-          th asset
-          th status
-          th started at
-          th last update
-          th duration
-      tbody
-        tr.clickable(v-for='gekko in watchers', v-on:click='$router.push({path: `/workers/${gekko.id}`})')
-          td {{ gekko.config.watch.exchange }}
-          td {{ gekko.config.watch.currency }}
-          td {{ gekko.config.watch.asset }}
-          td {{ status(gekko) }}
-          td
-            template(v-if='gekko.events.initial.candle') {{ fmt(gekko.events.initial.candle.start) }}
-          td
-            template(v-if='gekko.events.latest.candle') {{ fmt(gekko.events.latest.candle.start) }}
-          td
-            template(v-if='gekko.events.initial.candle && gekko.events.latest.candle') {{ timespan(gekko.events.latest.candle.start, gekko.events.initial.candle.start) }}
-    h3 Strat runners
-    .text(v-if='!stratrunners.length')
-      p You don't have any stratrunners.
-    table.full(v-if='stratrunners.length')
-      thead
-        tr
-          th exchange
-          th currency
-          th asset
-          th status
-          th duration
-          th strategy
-          th PnL
-          th type
-          th trades
-      tbody
-        tr.clickable(v-for='gekko in stratrunners', v-on:click='$router.push({path: `/workers/${gekko.id}`})')
-          td {{ gekko.config.watch.exchange }}
-          td {{ gekko.config.watch.currency }}
-          td {{ gekko.config.watch.asset }}
-          td {{ status(gekko) }}
-          td
-            template(v-if='gekko.events.initial.candle && gekko.events.latest.candle') {{ timespan(gekko.events.latest.candle.start, gekko.events.initial.candle.start) }}
-          td {{ gekko.config.tradingAdvisor.method }}
-          td
-            template(v-if='!report(gekko)') 0
-            template(v-if='report(gekko)') {{ round(report(gekko).profit) }} {{ report(gekko).currency }}
-          td {{ gekko.logType }}
-          td
-            template(v-if='!gekko.events.tradeCompleted') 0
-            template(v-if='gekko.events.tradeCompleted') {{ gekko.events.tradeCompleted.length }}
-    .hr
+<template>
+  <div class="contain py2">
+    <div class="page-actions">
+      <router-link class="btn--primary" to="/workers/new">Start a Worker</router-link>
+    </div>
+    <h3 class="page-header">Workers</h3>
+    <h4 class="section-header">Market watchers</h4>
+    <div class="text" v-if="!watchers.length">
+      <p>You don't have any market watchers.</p>
+    </div>
+    <table class="full market clickable" v-if="watchers.length">
+      <thead>
+        <tr>
+          <th>exchange</th>
+          <th>currency</th>
+          <th>asset</th>
+          <th>status</th>
+          <th>started at</th>
+          <th>last update</th>
+          <th>duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="clickable" v-for="gekko in watchers" v-on:click="$router.push({path: `/workers/${gekko.id}`})">
+          <td>{{ gekko.config.watch.exchange }}</td>
+          <td>{{ gekko.config.watch.currency }}</td>
+          <td>{{ gekko.config.watch.asset }}</td>
+          <td>{{ status(gekko) }}</td>
+          <td><template v-if="gekko.events.initial.candle">{{ fmt(gekko.events.initial.candle.start) }}</template></td>
+          <td><template v-if="gekko.events.latest.candle">{{ fmt(gekko.events.latest.candle.start) }}</template></td>
+          <td><template v-if="gekko.events.initial.candle && gekko.events.latest.candle">{{ timespan(gekko.events.latest.candle.start, gekko.events.initial.candle.start) }}</template></td>
+        </tr>
+      </tbody>
+    </table>
 
-    router-link.btn--primary(to='/workers/new') Start a new Worker!
+    <br/>
+
+    <h4 class="section-header">Strat runners</h4>
+    <div class="text" v-if="!stratrunners.length">
+      <p>You don't have any stratrunners.</p>
+    </div>
+    <table class="full" v-if="stratrunners.length">
+      <thead>
+        <tr>
+          <th>exchange</th>
+          <th>currency</th>
+          <th>asset</th>
+          <th>status</th>
+          <th>duration</th>
+          <th>strategy</th>
+          <th>PnL</th>
+          <th>type</th>
+          <th>trades</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="clickable" v-for="gekko in stratrunners" v-on:click="$router.push({path: `/workers/${gekko.id}`})">
+          <td>{{ gekko.config.watch.exchange }}</td>
+          <td>{{ gekko.config.watch.currency }}</td>
+          <td>{{ gekko.config.watch.asset }}</td>
+          <td>{{ status(gekko) }}</td>
+          <td><template v-if="gekko.events.initial.candle && gekko.events.latest.candle">{{ timespan(gekko.events.latest.candle.start, gekko.events.initial.candle.start) }}</template></td>
+          <td>{{ gekko.config.tradingAdvisor.method }}</td>
+          <td><template v-if="!report(gekko)">0</template><template v-if="report(gekko)">{{ round(report(gekko).profit) }} {{ report(gekko).currency }}</template></td>
+          <td>{{ gekko.logType }}</td>
+          <td><template v-if="!gekko.events.tradeCompleted">0</template><template v-if="gekko.events.tradeCompleted">{{ gekko.events.tradeCompleted.length }}</template></td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <div class="hr"></div> -->
+  </div>
 </template>
 
 <script>
@@ -83,21 +93,21 @@ export default {
   computed: {
     stratrunners: function() {
       return _.values(this.$store.state.gekkos)
-        .concat(_.values(this.$store.state.archivedGekkos))
-          .filter(g => {
-            if(g.logType === 'papertrader')
-              return true;
+      .concat(_.values(this.$store.state.archivedGekkos))
+      .filter(g => {
+        if(g.logType === 'papertrader')
+        return true;
 
-            if(g.logType === 'tradebot')
-              return true;
+        if(g.logType === 'tradebot')
+        return true;
 
-            return false;
-          })
+        return false;
+      })
     },
     watchers: function() {
       return _.values(this.$store.state.gekkos)
-        .concat(_.values(this.$store.state.archivedGekkos))
-        .filter(g => g.logType === 'watcher')
+      .concat(_.values(this.$store.state.archivedGekkos))
+      .filter(g => g.logType === 'watcher')
     }
   },
   methods: {
@@ -110,11 +120,11 @@ export default {
     },
     status: state => {
       if(state.errored)
-        return 'errored';
+      return 'errored';
       if(state.stopped)
-        return 'stopped';
+      return 'stopped';
       if(state.active)
-        return 'running';
+      return 'running';
 
       console.log('unknown state:', state);
     },
@@ -131,13 +141,10 @@ table.clickable {
 }
 
 tr.clickable td:nth-child(1) {
-  padding-left: 5px;
+  /* padding-left: 5px; */
 }
 
 tr.clickable {
   cursor: pointer;
-}
-tr.clickable:hover {
-  background: rgba(216,216,216,.99);
 }
 </style>

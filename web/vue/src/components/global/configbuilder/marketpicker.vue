@@ -1,17 +1,17 @@
 <template lang='pug'>
 div
-  .mx1
+  div
     label(for='exchange').wrapper Exchange:
     .custom-select.button
       select(v-model='exchange')
         option(v-for='(market, e) in exchanges') {{ e }}
   .grd-row
-    .grd-row-col-3-6.mx1
+    .grd-row-col-3-6
       label(for='currency') Currency:
       .custom-select.button
         select(v-model='currency')
           option(v-for='cur in currencies') {{ cur }}
-    .grd-row-col-3-6.mx1
+    .grd-row-col-3-6.pl1
       label(for='asset') Asset:
       .custom-select.button
         select(v-model='asset')

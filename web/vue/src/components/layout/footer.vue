@@ -1,7 +1,7 @@
 <template lang='pug'>
-  footer.p2.bg--off-white
+  footer.p3
     .contain
-      p &copy; 21Trader of XXI Capital, LLC
+      p &copy; 21Trader | XXI Capital, LLC
 </template>
 
 <script>
@@ -19,3 +19,13 @@ export default {
   }
 }
 </script>
+
+<style>
+  footer p {
+    font-size: 12px;
+    text-align: right;
+    letter-spacing: 1px;
+    font-weight: bold;
+    opacity: 0.8;
+  }
+</style>
