@@ -1,5 +1,5 @@
 {
-  "name": "gekko",
+  "name": "21trader",
   "version": "0.6.8",
   "description": "A bitcoin trading bot for auto trading at various exchanges",
   "keywords": [
@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "test": "./node_modules/.bin/mocha test/*.js --recursive test -u tdd --reporter spec",
-    "start": "node ./gekko --config config.js --ui",
+    "start": "electron . --config config.js --ui",
     "setup": "yarn install --production && cd exchange && yarn install --production"
   },
   "author": "Mike van Rossum <mike@mvr.me>",
@@ -20,6 +20,7 @@
     "bitfinex-api-node": "^1.2.1",
     "co-fs": "^1.2.0",
     "commander": "^2.13.0",
+    "electron": "^12.0.9",
     "gekko": "0.0.9",
     "humanize-duration": "^3.10.0",
     "koa": "^1.2.0",
@@ -56,6 +57,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/askmike/gekko.git"
+    "url": "https://github.com/xxilabs/21trader.git"
   }
 }

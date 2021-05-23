@@ -6,7 +6,7 @@ const cors = require('koa-cors');
 const _ = require('lodash');
 const bodyParser = require('koa-bodyparser');
 
-const opn = require('opn');
+// const opn = require('opn');
 const server = require('http').createServer();
 const router = require('koa-router')();
 const ws = require('ws');
@@ -125,15 +125,13 @@ server.listen(config.api.port, config.api.host, '::', () => {
     var location = `http://${host}`;
   }
 
-  console.log('Serving Gekko UI on ' + location +  '\n');
-
 
   // only open a browser when running `node gekko`
   // this prevents opening the browser during development
-  if(!isDevServer && !config.headless) {
-    opn(location)
-      .catch(err => {
-        console.log('Something went wrong when trying to open your web browser. UI is running on ' + location + '.');
-    });
-  }
+  // if(!isDevServer && !config.headless) {
+  //   opn(location)
+  //     .catch(err => {
+  //       console.log('Something went wrong when trying to open your web browser. UI is running on ' + location + '.');
+  //   });
+  // }
 });
